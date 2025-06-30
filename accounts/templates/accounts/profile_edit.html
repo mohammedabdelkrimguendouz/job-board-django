@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% load bootstrap4 %} {% block body %}
+
+<!-- bradcam_area -->
+<div class="bradcam_area bradcam_bg_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="bradcam_text">
+          <h3>Edit Profile</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ bradcam_area -->
+
+<!-- Edit Profile Form -->
+<div class="job_details_area py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="apply_job_form white-bg shadow rounded p-4">
+          <h4 class="mb-4 text-center">Update Your Profile</h4>
+
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h5 class="mb-3">Profile Details</h5>
+            {% bootstrap_form userForm %} > {% bootstrap_form profileForm %}
+            <!-- زر التعديل -->
+            {% buttons %}
+            <button class="boxed-btn3 w-100" type="submit">Save Change</button>
+            {% endbuttons %}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

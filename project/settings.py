@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
+import dj_database_url
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #my apps
-    'job','home','accounts','blog','contact'
+    'job',
+    "bootstrap4",
+    'contact',
+    'django_filters',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +65,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,18 +77,27 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
+
 
 
 # Password validation
@@ -117,8 +135,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    "/var/www/static/",
+]
+
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL = reverse_lazy('accounts:profile')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mohammedabdelkrimguendouz@gmail.com'
+EMAIL_HOST_PASSWORD = 'tlju rvmj fxaj bvyk'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+

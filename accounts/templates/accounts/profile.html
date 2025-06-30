@@ -1,0 +1,90 @@
+{% extends "base.html" %}{% load bootstrap4 %} {% block body %}
+
+<!-- bradcam_area -->
+<div class="bradcam_area bradcam_bg_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="bradcam_text">
+          <h3>Profile</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--/ bradcam_area -->
+
+<!-- Profile Summary -->
+<div class="job_details_area py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow border-0 rounded overflow-hidden">
+          <div class="row g-0">
+            <!-- صورة المستخدم -->
+            <div
+              class="col-md-4 bg-light d-flex justify-content-center align-items-center"
+            >
+              <img
+                src="{{ profile.image.url }}"
+                alt="Profile Image"
+                class="img-fluid rounded-circle my-4"
+                style="
+                  width: 130px;
+                  height: 130px;
+                  object-fit: cover;
+                  border: 3px solid #dee2e6;
+                "
+              />
+            </div>
+
+            <!-- بيانات المستخدم -->
+            <div class="col-md-8">
+              <div class="p-4">
+                <h3 class="mb-3">
+                  {{ profile.user.get_full_name|default:profile.user.username }}
+                </h3>
+                <ul class="list-unstyled mb-3">
+                  <li class="mb-2">
+                    <strong
+                      ><i class="fa fa-envelope text-primary me-2"></i
+                      >    Email:</strong
+                    >
+                    {{ profile.user.email }}
+                  </li>
+                  <li class="mb-2">
+                    <strong
+                      ><i class="fa fa-phone text-primary me-2"></i
+                      >     Phone:</strong
+                    >
+                    {{ profile.phone_number }}
+                  </li>
+                  <li class="mb-2">
+                    <strong
+                      ><i class="fa fa-map-marker text-primary me-2"></i
+                      >     City:</strong
+                    >
+                    {{ profile.city }}
+                  </li>
+                </ul>
+
+                <!-- زر التعديل -->
+                <div class="p-5">
+                  <a href="{% url 'accounts:profile_edit' %}">
+                    {% buttons %}
+                    <button class="boxed-btn3 w-100" type="submit">
+                      Edit Profile
+                    </button>
+                    {% endbuttons %}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
